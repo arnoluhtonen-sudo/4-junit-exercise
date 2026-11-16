@@ -1,5 +1,7 @@
 package refactoring;
 
+import java.time.Year;
+
 /**
  * Smelly Example #1
  *
@@ -65,6 +67,32 @@ public class DayOfYear {
             dayOfMonth += 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 31;
         }
 
+        return dayOfMonth;
+    }
+
+    public static int dayOfYearFixed(int month, int dayOfMonth, int year) {
+
+        // Taulukko ja for-lause sivulta
+        // https://web.mit.edu/6.005/www/fa16/classes/04-code-review/
+
+        int[] monthLengths = new int[] {
+                31, 28, 31, 30, 31, 30,
+                31, 31, 30, 31, 30, 31 };
+
+        if (!Year.isLeap(year) && month == 2 && dayOfMonth > 28){
+            throw new IllegalArgumentException();
+        }
+
+        for (int m = 1; m < month; ++m) {
+            dayOfMonth += monthLengths[m - 1];
+
+        }
+        // boolean isLeap()
+        // https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Year.html
+        
+        if (Year.isLeap(year) && month > 2) {
+            dayOfMonth++;
+        }
         return dayOfMonth;
     }
 }

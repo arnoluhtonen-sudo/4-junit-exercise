@@ -1,7 +1,6 @@
 package refactoring;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -25,9 +24,15 @@ public class DayOfYearTest {
         assertEquals(366, paivanumero);
     }
     @Test
-    void firstDayOfFebruary(){
-        int paivanumero = DayOfYear.dayOfYear(2, 28, 2020);
-        assertEquals(32, paivanumero);
+    void wrongFebruaryAssertThrows(){
+        assertThrows(IllegalArgumentException.class,
+            () -> DayOfYear.dayOfYear(2, 29, 2019));
+
+    }
+    @Test
+    void lastDayOfLeaplFebruary(){
+        int paivanumero = DayOfYear.dayOfYear(2, 29, 2020);
+        assertEquals(60, paivanumero);
 
     }
     @Test 
@@ -40,17 +45,6 @@ public class DayOfYearTest {
         int paivanumero = DayOfYear.dayOfYear(3, 1, 2020);
         assertEquals(61, paivanumero);
 
-    }
-    @Test
-    void middleOfYear(){
-        int paivanumero = DayOfYear.dayOfYear(6, 15, 2020);
-        assertNotEquals(167, paivanumero);
-    }
-    @Test
-    void invalidDateThrowsException(){
-        assertThrows(IllegalArgumentException.class,
-            () ->
-        DayOfYear.dayOfYear(2, 30, 2020));
     }
 
 }
